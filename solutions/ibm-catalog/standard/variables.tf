@@ -71,14 +71,14 @@ variable "private_subnet_3" {
   Configure this input object to create a new subnet for your instance. To skip subnet creation, set this value to null. Follow the example formats to configure. Mandatory fields - 'name', 'cidr'. Optional field - 'ip'.
   Subnet creation with ip assign example:
     {
-      name = "vtl_subnet"
-      cidr = "10.70.0.0/24"
-      ip   = "10.70.0.21"
+      "name" : "vtl_subnet",
+      "cidr" : "10.70.0.0/24",
+      "ip"   : "10.70.0.21",
     }
   Subnet creation without ip assign example:
     {
-      name = "vtl_subnet"
-      cidr = "10.70.0.0/24"
+      "name" : "vtl_subnet",
+      "cidr" : "10.70.0.0/24"
     }
   EOT
   type = object({
@@ -121,14 +121,14 @@ variable "private_subnet_4" {
   Configure this input object to create a new subnet for your instance. To skip subnet creation, set this value to null. Follow the example formats to configure. Mandatory fields - 'name', 'cidr'. Optional field - 'ip'.
   Subnet creation with ip assign example:
     {
-      name = "vtl_subnet"
-      cidr = "10.70.0.0/24"
-      ip   = "10.70.0.21"
+      "name" : "vtl_subnet",
+      "cidr" : "10.71.0.0/24",
+      "ip"   : "10.71.0.21"
     }
   Subnet creation without ip assign example:
     {
-      name = "vtl_subnet"
-      cidr = "10.70.0.0/24"
+      "name" : "vtl_subnet",
+      "cidr" : "10.71.0.0/24"
     }
   EOT
 
