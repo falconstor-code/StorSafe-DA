@@ -1,48 +1,41 @@
 ###############################################################
 # Outputs
 ###############################################################
-output "storsight_vsi" {
-  description = "A list of VSI with name, id, zone, and primary ipv4 address"
-  value       = var.create_storsight_instance ? module.create_storsight_instance : []
-}
-
-output "powervs_workspace_name" {
-  description = "PowerVS infrastructure workspace name."
-  value       = local.powervs_workspace_name
-}
-
 output "powervs_workspace_guid" {
-  description = "PowerVS infrastructure workspace guid. The GUID of the resource instance."
+  description = "The GUID of resource instance - Power Virtual Server workspace."
   value       = local.powervs_workspace_guid
 }
 
+output "powervs_workspace_name" {
+  description = "The name of Power Virtual Server workspace."
+  value       = local.powervs_workspace_name
+}
+
 output "powervs_zone" {
-  description = "Zone where PowerVS infrastructure is created."
+  description = "The zone where PowerVS infrastructure is created."
   value       = local.powervs_zone
 }
 
-output "powervs_stor_safe_vtl_instance" {
-  description = "All private IPS of FalconStor instance."
+output "storsight_instance" {
+  description = "Details of Windows VSI created in Edge VPC of PowerVS infrastructure with VPC landing zone."
+  value       = var.create_storsight_instance ? module.create_storsight_instance[0].list[0] : {}
+}
+
+output "storsafe_vtl_instance" {
+  description = "The name, id and private IPS of FalconStor StorSafe vtl instance."
   value = {
-    crn         = resource.ibm_pi_instance.instance.crn
-    instance_id = resource.ibm_pi_instance.instance.instance_id
-    powervs_falcon_stor_instance_ips = {
-      for entry in resource.ibm_pi_instance.instance.pi_network : "${entry.network_name}_ip" => entry.ip_address
-    }
+    instance_name        = module.pi_instance.pi_instance_name
+    instance_id          = module.pi_instance.pi_instance_id
+    instance_private_ips = module.pi_instance.pi_instance_private_ips
   }
 }
 
-output "powervs_stor_safe_vtl_volume_list" {
-  description = "All private IPS of FalconStor instance."
-  value       = local.powervs_stor_safe_vtl_volume_list
+output "storsafe_vtl_instance_subnets" {
+  description = "The subnets attached to the FalconStor StorSafe vtl instance."
+  value       = local.pi_subnet_list
 }
 
-output "powervs_management_subnet" {
-  description = "Name, ID and CIDR of management private network in created PowerVS infrastructure."
-  value       = local.powervs_mgmt_net
-}
-
-output "powervs_backup_subnet" {
-  description = "Name, ID and CIDR of backup private network in created PowerVS infrastructure."
-  value       = local.powervs_bkp_net
+output "storsafe_vtl_volumes_list" {
+  description = "List of volumes created - configuration, index and tape volumes."
+  value       = local.storsafe_vtl_volume_list
 }

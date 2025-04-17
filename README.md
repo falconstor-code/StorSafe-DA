@@ -8,10 +8,10 @@
 
 ## Required resources
 
-  * Create a Power Systems Virtual Server Instance. For more information, see [Getting started with IBM Power Systems Virtual Servers](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-getting-started).  
+  * Create a Power Systems Virtual Server Instance. For more information, see [Getting started with IBM Power Systems Virtual Servers](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-getting-started).
   * You cannot create a private network during the VM provisioning process. You must first use the Power Systems Virtual Server user interface, command line interface (CLI), or application programming interfaced (API) to [create one](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-configuring-subnet).
   * It is recommended to create a public and private SSH key that you can use to securely connect to your Power Systems Virtual Server. For more information, see [Adding an SSH key](https://cloud.ibm.com/docs/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
-  
+
 ## Installing the software
 
 To install the software, configure the following variables:
@@ -33,10 +33,10 @@ For information about applying updates and fixes, see [Downloading fixes and upd
 
 ## Uninstalling the software
 
-Complete the following steps to uninstall a Helm Chart from your account. 
+Complete the following steps to uninstall a Helm Chart from your account.
 
 1. Go to the **Menu** > **Schematics**.
-2. Select your workspace name. 
+2. Select your workspace name.
 3. Click **Actions** > **Destroy resources**. All resources in your workspace are deleted.
 4. Click **Update**.
-5. To delete your workspace, click **Actions** > **Delete workspace**. 
+5. To delete your workspace, click **Actions** > **Delete workspace**.

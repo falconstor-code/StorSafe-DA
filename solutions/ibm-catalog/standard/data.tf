@@ -67,14 +67,9 @@ data "ibm_pi_network" "powervs_backup_subnet" {
   pi_network_name      = local.powervs_bkp_net
 }
 
-data "ibm_pi_network" "network_3" {
-  count                = length(var.network_3) > 0 ? 1 : 0
-  pi_cloud_instance_id = local.powervs_workspace_guid
-  pi_network_name      = var.network_3
-}
+data "ibm_pi_network" "existing_powervs_subnets" {
+  for_each = local.enable_existing_subnets_attach ? { for subnet in var.existing_powervs_subnets : subnet.name => subnet } : {}
 
-data "ibm_pi_network" "network_4" {
-  count                = length(var.network_4) > 0 ? 1 : 0
   pi_cloud_instance_id = local.powervs_workspace_guid
-  pi_network_name      = var.network_4
+  pi_network_name      = each.value.name
 }

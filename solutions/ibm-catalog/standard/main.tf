@@ -21,39 +21,51 @@ module "create_storsight_instance" {
 }
 
 ###############################################################
+# Create Private Subnets in PowerVS Workspace
+###############################################################
+
+resource "ibm_pi_network" "private_subnet_3" {
+  count                = var.private_subnet_3 != null ? 1 : 0
+  pi_cloud_instance_id = local.powervs_workspace_guid
+  pi_network_name      = var.private_subnet_3.name
+  pi_cidr              = var.private_subnet_3.cidr
+  pi_network_type      = "vlan"
+  pi_network_mtu       = 9000
+}
+
+resource "ibm_pi_network" "private_subnet_4" {
+  count = var.private_subnet_4 != null ? 1 : 0
+
+  depends_on           = [ibm_pi_network.private_subnet_3]
+  pi_cloud_instance_id = local.powervs_workspace_guid
+  pi_network_name      = var.private_subnet_4.name
+  pi_cidr              = var.private_subnet_4.cidr
+  pi_network_type      = "vlan"
+  pi_network_mtu       = 9000
+}
+
+###############################################################
 # Deploy Virtual Appliance Instance and Volumes
 ###############################################################
-resource "ibm_pi_instance" "instance" {
-  pi_cloud_instance_id           = local.powervs_workspace_guid
-  pi_memory                      = var.memory
-  pi_processors                  = var.vcpus
-  pi_instance_name               = var.instance_name
-  pi_proc_type                   = var.processor_mode
+
+module "pi_instance" {
+  source  = "terraform-ibm-modules/powervs-instance/ibm"
+  version = "2.6.1"
+
+  pi_workspace_guid              = local.powervs_workspace_guid
+  pi_ssh_public_key_name         = length(local.powervs_sshkey_name) > 0 ? data.ibm_pi_key.key.id : null
   pi_image_id                    = local.pi_image_id
-  pi_sys_type                    = var.system_type
-  pi_storage_type                = var.storage_type
-  pi_key_pair_name               = length(local.powervs_sshkey_name) > 0 ? data.ibm_pi_key.key.id : null
-  pi_affinity_policy             = length(var.pvm_instances) > 0 ? var.affinity_policy : null
-  pi_anti_affinity_instances     = length(var.pvm_instances) > 0 ? split(",", var.pvm_instances) : null
+  pi_networks                    = local.pi_subnet_list
+  pi_instance_name               = var.instance_name
+  pi_server_type                 = var.system_type
+  pi_number_of_processors        = var.vcpus
+  pi_memory_size                 = var.memory
+  pi_cpu_proc_type               = var.processor_mode
+  pi_boot_image_storage_tier     = var.storage_type
   pi_placement_group_id          = local.placement_group_id
-  pi_license_repository_capacity = var.repository_capacity == 0 ? 1 : var.repository_capacity # deprecated
-  pi_network {
-    network_id = data.ibm_pi_network.powervs_management_subnet.id
-    ip_address = length(var.management_net_ip) > 0 ? var.management_net_ip : ""
-  }
-  dynamic "pi_network" {
-    for_each = local.pi_subnet_list
-    content {
-      network_id = pi_network.value.id
-      ip_address = pi_network.value.ip != null && pi_network.value.ip != "" ? pi_network.value.ip : null
-    }
-  }
-  lifecycle {
-    precondition {
-      condition     = local.pi_image_id != null
-      error_message = "The provided PowerVS boot image name ${var.pi_instance_boot_image} is not found in ibm_pi_catalog_images."
-    }
-  }
+  pi_affinity_policy             = local.enable_anti_affinity ? var.affinity_policy : null
+  pi_anti_affinity               = local.enable_anti_affinity ? { anti_affinity_instances = var.pvm_instances } : null
+  pi_license_repository_capacity = var.repository_capacity == 0 ? 1 : var.repository_capacity
 }
 
 resource "ibm_pi_volume" "configuration_volume" {

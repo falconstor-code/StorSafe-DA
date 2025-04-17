@@ -41,6 +41,17 @@
           ],
           "configuration": [
             {
+              "key": "ibmcloud_api_key",
+              "type": "multiline_secure_value",
+              "display_name": "Multiline secure value",
+              "required": true,
+              "custom_config": {
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "type": "multiline_secure_value"
+              }
+            },
+            {
               "key": "prerequisite_workspace_id",
               "required": true,
               "custom_config": {
@@ -52,17 +63,6 @@
                 "grouping": "deployment",
                 "original_grouping": "deployment",
                 "type": "schematics_workspace"
-              }
-            },
-            {
-              "key": "ibmcloud_api_key",
-              "type": "multiline_secure_value",
-              "display_name": "Multiline secure value",
-              "required": true,
-              "custom_config": {
-                "grouping": "deployment",
-                "original_grouping": "deployment",
-                "type": "multiline_secure_value"
               }
             },
             {
@@ -82,6 +82,9 @@
               "required": true
             },
             {
+              "key": "processor_mode"
+            },
+            {
               "key": "system_type",
               "required": true
             },
@@ -96,16 +99,13 @@
               "key": "backup_net_ip"
             },
             {
-              "key": "network_3"
+              "key": "private_subnet_3"
             },
             {
-              "key": "network_3_ip"
+              "key": "private_subnet_4"
             },
             {
-              "key": "network_4"
-            },
-            {
-              "key": "network_4_ip"
+              "key": "existing_powervs_subnets"
             },
             {
               "key": "placement_group"
@@ -114,9 +114,6 @@
               "key": "affinity_policy",
               "required": true,
               "hidden": true
-            },
-            {
-              "key": "processor_mode"
             },
             {
               "key": "pvm_instances"
@@ -148,25 +145,25 @@
           ],
           "outputs": [
             {
-              "key": "powervs_workspace_name"
+              "key": "powervs_workspace_guid"
             },
             {
-              "key": "powervs_workspace_guid"
+              "key": "powervs_workspace_name"
             },
             {
               "key": "powervs_zone"
             },
             {
-              "key": "powervs_falcon_stor_instance"
+              "key": "storsight_instance"
             },
             {
-              "key": "powervs_falcon_stor_volume_list"
+              "key": "storsafe_vtl_instance"
             },
             {
-              "key": "powervs_management_subnet"
+              "key": "storsafe_vtl_instance_subnets"
             },
             {
-              "key": "powervs_backup_subnet"
+              "key": "storsafe_vtl_volumes_list"
             }
           ],
           "compliance": {},
