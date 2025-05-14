@@ -2,44 +2,82 @@
 # Deploy Windows Instance in Edge VPC
 ###############################################################
 
+resource "ibm_is_image" "import_custom_storsight_image" {
+  count = var.create_storsight_instance ? 1 : 0
+
+  name             = var.custom_storsight_image.name
+  href             = var.custom_storsight_image.cos_href
+  operating_system = var.custom_storsight_image.operating_system
+  timeouts {
+    create = "1h"
+  }
+}
+
+# IBM terraform modules does not support custom boot size currently. Feature request is opened. Hence using resource.
+
+resource "ibm_is_instance" "storsight_instance" {
+  count = var.create_storsight_instance ? 1 : 0
+
+  name           = "${local.prefix}-storsight"
+  image          = data.ibm_is_image.storsight_boot_image_data[0].id
+  profile        = var.storsight_instance_configuration.profile
+  resource_group = local.resource_group_id
+  keys           = local.ssh_key_ids
+  primary_network_interface {
+    subnet          = local.network_svc_subnet_id
+    security_groups = local.security_group_ids
+  }
+  boot_volume {
+    auto_delete_volume = true
+    name               = var.storsight_instance_configuration.boot_volume_name
+    size               = var.storsight_instance_configuration.boot_volume_size
+    encryption         = local.boot_volume_encryption_key
+  }
+  vpc  = local.vpc_id
+  zone = local.network_svc_subnet[0].zone
+}
+
 module "create_windows_instance" {
   count   = var.create_windows_instance ? 1 : 0
   source  = "terraform-ibm-modules/landing-zone-vsi/ibm"
   version = "4.7.1"
 
-  create_security_group = false
-  image_id              = data.ibm_is_image.is_instance_boot_image_data[0].id
-  machine_type          = var.is_instance_profile
-  prefix                = local.prefix
-  resource_group_id     = local.resource_group_id
-  security_group_ids    = local.security_group_ids
-  ssh_key_ids           = local.ssh_key_ids
-  subnets               = local.subnets
-  user_data             = ""
-  vpc_id                = local.vpc_id
-  vsi_per_subnet        = 1
+  create_security_group         = false
+  image_id                      = data.ibm_is_image.is_instance_boot_image_data[0].id
+  machine_type                  = var.windows_instance_configuration.instance_profile
+  prefix                        = "${local.prefix}-windows"
+  resource_group_id             = local.resource_group_id
+  security_group_ids            = local.security_group_ids
+  ssh_key_ids                   = local.ssh_key_ids
+  subnets                       = local.subnets
+  user_data                     = ""
+  vpc_id                        = local.vpc_id
+  vsi_per_subnet                = 1
+  kms_encryption_enabled        = true
+  skip_iam_authorization_policy = true
+  boot_volume_encryption_key    = local.boot_volume_encryption_key
 }
 
 ###############################################################
 # Create Private Subnets in PowerVS Workspace
 ###############################################################
 
-resource "ibm_pi_network" "private_subnet_3" {
-  count                = var.private_subnet_3 != null ? 1 : 0
+resource "ibm_pi_network" "optional_subnet_3" {
+  count                = var.optional_subnet_3 != null ? 1 : 0
   pi_cloud_instance_id = local.powervs_workspace_guid
-  pi_network_name      = var.private_subnet_3.name
-  pi_cidr              = var.private_subnet_3.cidr
+  pi_network_name      = var.optional_subnet_3.name
+  pi_cidr              = var.optional_subnet_3.cidr
   pi_network_type      = "vlan"
   pi_network_mtu       = 9000
 }
 
-resource "ibm_pi_network" "private_subnet_4" {
-  count = var.private_subnet_4 != null ? 1 : 0
+resource "ibm_pi_network" "optional_subnet_4" {
+  count = var.optional_subnet_4 != null ? 1 : 0
 
-  depends_on           = [ibm_pi_network.private_subnet_3]
+  depends_on           = [ibm_pi_network.optional_subnet_3]
   pi_cloud_instance_id = local.powervs_workspace_guid
-  pi_network_name      = var.private_subnet_4.name
-  pi_cidr              = var.private_subnet_4.cidr
+  pi_network_name      = var.optional_subnet_4.name
+  pi_cidr              = var.optional_subnet_4.cidr
   pi_network_type      = "vlan"
   pi_network_mtu       = 9000
 }

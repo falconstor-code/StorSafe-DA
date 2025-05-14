@@ -17,24 +17,18 @@ data "ibm_schematics_output" "schematics_output" {
 ###############################################################
 # Data of boot image for windows instance in VPC
 ###############################################################
+
+data "ibm_is_image" "storsight_boot_image_data" {
+  count = var.create_storsight_instance ? 1 : 0
+  name  = var.custom_storsight_image.name
+  depends_on = [
+    ibm_is_image.import_custom_storsight_image
+  ]
+}
+
 data "ibm_is_image" "is_instance_boot_image_data" {
   count = var.create_windows_instance ? 1 : 0
-  name  = var.is_instance_boot_image
-}
-
-data "ibm_is_instance" "network_services_instance" {
-  count = var.create_windows_instance ? 1 : 0
-  name  = local.network_services_instance.name
-}
-
-data "ibm_is_subnet" "network_services_subnet" {
-  count      = var.create_windows_instance ? 1 : 0
-  identifier = data.ibm_is_instance.network_services_instance[0].network_attachments[0].subnet[0].id
-}
-
-data "ibm_is_vpc" "edge_vpc_data" {
-  count = var.create_windows_instance ? 1 : 0
-  name  = local.vpc_name
+  name  = var.windows_instance_configuration.boot_image
 }
 
 ###############################################################

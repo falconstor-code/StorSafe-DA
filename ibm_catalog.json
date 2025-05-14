@@ -21,7 +21,7 @@
             {
               "name": "deploy-arch-ibm-pvs-inf",
               "id": "2dd486c7-b317-4aaa-907b-42671485ad96-global",
-              "flavors": ["standard", "standard-extend", "import"],
+              "flavors": ["standard", "standard-extend"],
               "install_type": "fullstack",
               "optional": true,
               "version": ">=8.0.0",
@@ -82,7 +82,8 @@
               "required": true
             },
             {
-              "key": "processor_mode"
+              "key": "processor_mode",
+              "required": true
             },
             {
               "key": "system_type",
@@ -99,10 +100,10 @@
               "key": "backup_net_ip"
             },
             {
-              "key": "private_subnet_3"
+              "key": "optional_subnet_3"
             },
             {
-              "key": "private_subnet_4"
+              "key": "optional_subnet_4"
             },
             {
               "key": "existing_subnets"
@@ -128,18 +129,25 @@
               "key": "volume_tape_size"
             },
             {
+              "key": "create_storsight_instance"
+            },
+            {
               "key": "create_windows_instance"
             },
             {
-              "key": "pi_instance_boot_image",
+              "key": "storsafe_instance_boot_image",
               "hidden": true
             },
             {
-              "key": "is_instance_boot_image",
+              "key": "windows_instance_configuration",
               "hidden": true
             },
             {
-              "key": "is_instance_profile",
+              "key": "custom_storsight_image",
+              "hidden": true
+            },
+            {
+              "key": "storsight_instance_configuration",
               "hidden": true
             }
           ],
@@ -181,23 +189,27 @@
           "architecture": {
             "features": [
               {
-                "title": "PowerVS Appliance Instance",
-                "description": "1"
+                "title": "StorSafe PowerVS Appliance Instance",
+                "description": "1 PowerVS Appliance Instance"
               },
               {
-                "title": "Number of PowerVS Volumes",
-                "description": "3"
+                "title": "Storage Volumes",
+                "description": "3 - Configuration, Index and Tape volumes"
               },
               {
-                "title": "Number of Windows VSI on VPC (Optional)",
-                "description": "1"
+                "title": "StorSight VSI on VPC",
+                "description": "Optional, custom StorSight image upload and VSI creation"
+              },
+              {
+                "title": "Windows VSI on VPC",
+                "description": "Optional"
               }
             ],
             "diagrams": [
               {
                 "diagram": {
                   "caption": "Architecture diagram",
-                  "url": "https://raw.githubusercontent.com/falconstor-code/StorSafe-DA/main/xdocs/architecture.svg",
+                  "url": "https://raw.githubusercontent.com/stafaniasaju/vtlda/storsight_v3/xdocs/deploy-storsafe-pvs-da.svg",
                   "metadata": []
                 },
                 "description": "FalconStor StorSafe PowerVS Deployable Architecture"
