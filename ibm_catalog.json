@@ -209,7 +209,7 @@
               {
                 "diagram": {
                   "caption": "Architecture diagram",
-                  "url": "https://raw.githubusercontent.com/stafaniasaju/vtlda/storsight_v3/xdocs/deploy-storsafe-pvs-da.svg",
+                  "url": "https://raw.githubusercontent.com/falconstor-code/StorSafe-DA/main/xdocs/deploy-storsafe-pvs-da.svg",
                   "metadata": []
                 },
                 "description": "FalconStor StorSafe PowerVS Deployable Architecture"
