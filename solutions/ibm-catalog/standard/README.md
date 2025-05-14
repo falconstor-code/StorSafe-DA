@@ -14,7 +14,7 @@
 - If you do not have a [Power Virtual Server with VPC landing zone deployment](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-pvs-inf-2dd486c7-b317-4aaa-907b-42671485ad96-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2c%2Fc2VhcmNoPXBvd2VyI3NlYXJjaF9yZXN1bHRz) that is the full stack solution for a PowerVS Workspace with Secure Landing Zone, create it first.
 
 ## Architecture Diagram
-![storsafe-pvs-da](https://raw.githubusercontent.com/stafaniasaju/vtlda/storsight_v3/xdocs/deploy-storsafe-pvs-da.svg)
+![storsafe-pvs-da](https://raw.githubusercontent.com/falconstor-code/StorSafe-DA/main/xdocs/deploy-storsafe-pvs-da.svg)
 
 
 <!-- The following content is automatically populated by the pre-commit hook -->
