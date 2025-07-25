@@ -26,7 +26,6 @@ locals {
   security_group_ids = local.get_vpc_data ? [local.security_group.group_id] : []
   network_svc_subnet = [for subnet in local.powervs_infrastructure[0].vpc_data.value[0].subnet_zone_list : subnet
   if can(regex("${local.prefix}-edge-vsi-edge", subnet.name))]
-  network_svc_subnet_id = local.network_svc_subnet[0].id
   subnets = local.get_vpc_data ? [{
     name = local.network_svc_subnet[0].name,
     id   = local.network_svc_subnet[0].id,
@@ -65,11 +64,11 @@ locals {
 # VPC instances
 locals {
   storsight_instance = var.create_storsight_instance ? {
-    "id"           = resource.ibm_is_instance.storsight_instance[0].id
-    "ipv4_address" = resource.ibm_is_instance.storsight_instance[0].primary_network_interface[0].primary_ipv4_address
-    "name"         = resource.ibm_is_instance.storsight_instance[0].name
-    "vpc_id"       = resource.ibm_is_instance.storsight_instance[0].vpc
-    "zone"         = resource.ibm_is_instance.storsight_instance[0].zone
+    "id"           = module.create_storsight_instance[0].list[0].id
+    "ipv4_address" = module.create_storsight_instance[0].list[0].ipv4_address
+    "name"         = module.create_storsight_instance[0].list[0].name
+    "vpc_id"       = module.create_storsight_instance[0].list[0].vpc_id
+    "zone"         = module.create_storsight_instance[0].list[0].zone
   } : {}
   windows_instance = var.create_windows_instance ? {
     "id"           = module.create_windows_instance[0].list[0].id

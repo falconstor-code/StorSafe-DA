@@ -24,33 +24,33 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.78.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.80.4 |
 
 ### Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_windows_instance"></a> [create\_windows\_instance](#module\_create\_windows\_instance) | terraform-ibm-modules/landing-zone-vsi/ibm | 4.7.1 |
-| <a name="module_pi_instance"></a> [pi\_instance](#module\_pi\_instance) | terraform-ibm-modules/powervs-instance/ibm | 2.6.1 |
+| <a name="module_create_storsight_instance"></a> [create\_storsight\_instance](#module\_create\_storsight\_instance) | terraform-ibm-modules/landing-zone-vsi/ibm | 5.4.6 |
+| <a name="module_create_windows_instance"></a> [create\_windows\_instance](#module\_create\_windows\_instance) | terraform-ibm-modules/landing-zone-vsi/ibm | 5.4.6 |
+| <a name="module_pi_instance"></a> [pi\_instance](#module\_pi\_instance) | terraform-ibm-modules/powervs-instance/ibm | 2.6.2 |
 
 ### Resources
 
 | Name | Type |
 |------|------|
-| [ibm_is_image.import_custom_storsight_image](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/resources/is_image) | resource |
-| [ibm_is_instance.storsight_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/resources/is_instance) | resource |
-| [ibm_pi_network.optional_subnet_3](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/resources/pi_network) | resource |
-| [ibm_pi_network.optional_subnet_4](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/resources/pi_network) | resource |
-| [ibm_pi_volume.configuration_volume](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/resources/pi_volume) | resource |
-| [ibm_pi_volume.index_volume](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/resources/pi_volume) | resource |
-| [ibm_pi_volume.tape_volume](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/resources/pi_volume) | resource |
-| [ibm_is_image.is_instance_boot_image_data](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/data-sources/is_image) | data source |
-| [ibm_is_image.storsight_boot_image_data](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/data-sources/is_image) | data source |
-| [ibm_pi_catalog_images.catalog_images_ds](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/data-sources/pi_catalog_images) | data source |
-| [ibm_pi_network.existing_subnets](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/data-sources/pi_network) | data source |
-| [ibm_pi_placement_groups.cloud_instance_groups](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/data-sources/pi_placement_groups) | data source |
-| [ibm_schematics_output.schematics_output](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/data-sources/schematics_output) | data source |
-| [ibm_schematics_workspace.schematics_workspace](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.78.0/docs/data-sources/schematics_workspace) | data source |
+| [ibm_is_image.import_custom_storsight_image](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/resources/is_image) | resource |
+| [ibm_pi_network.optional_subnet_3](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/resources/pi_network) | resource |
+| [ibm_pi_network.optional_subnet_4](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/resources/pi_network) | resource |
+| [ibm_pi_volume.configuration_volume](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/resources/pi_volume) | resource |
+| [ibm_pi_volume.index_volume](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/resources/pi_volume) | resource |
+| [ibm_pi_volume.tape_volume](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/resources/pi_volume) | resource |
+| [ibm_is_image.is_instance_boot_image_data](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/data-sources/is_image) | data source |
+| [ibm_is_image.storsight_boot_image_data](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/data-sources/is_image) | data source |
+| [ibm_pi_catalog_images.catalog_images_ds](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/data-sources/pi_catalog_images) | data source |
+| [ibm_pi_network.existing_subnets](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/data-sources/pi_network) | data source |
+| [ibm_pi_placement_groups.cloud_instance_groups](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/data-sources/pi_placement_groups) | data source |
+| [ibm_schematics_output.schematics_output](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/data-sources/schematics_output) | data source |
+| [ibm_schematics_workspace.schematics_workspace](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.80.4/docs/data-sources/schematics_workspace) | data source |
 
 ### Inputs
 
@@ -75,7 +75,7 @@
 | <a name="input_repository_capacity"></a> [repository\_capacity](#input\_repository\_capacity) | The StorSafe licensed repository capacity in TB. | `number` | `1` | no |
 | <a name="input_storage_type"></a> [storage\_type](#input\_storage\_type) | The type of storage tier for all volumes to attach to the StorSafe instance: 'tier1' (high performance) or 'tier3'. | `string` | `"tier1"` | no |
 | <a name="input_storsafe_instance_boot_image"></a> [storsafe\_instance\_boot\_image](#input\_storsafe\_instance\_boot\_image) | The boot image to be used while creating the StorSafe PowerVS instance. | `string` | `"VTL-FalconStor-11_13_001"` | no |
-| <a name="input_storsight_instance_configuration"></a> [storsight\_instance\_configuration](#input\_storsight\_instance\_configuration) | The instance profile to be used while creating StorSight instance. | <pre>object({<br/>    profile          = string<br/>    boot_volume_name = string<br/>    boot_volume_size = number<br/>  })</pre> | <pre>{<br/>  "boot_volume_name": "storsight-boot-volume",<br/>  "boot_volume_size": 200,<br/>  "profile": "bx2-4x16"<br/>}</pre> | no |
+| <a name="input_storsight_instance_configuration"></a> [storsight\_instance\_configuration](#input\_storsight\_instance\_configuration) | The instance profile to be used while creating StorSight instance. | <pre>object({<br/>    profile          = string<br/>    boot_volume_size = number<br/>  })</pre> | <pre>{<br/>  "boot_volume_size": 200,<br/>  "profile": "bx2-4x16"<br/>}</pre> | no |
 | <a name="input_system_type"></a> [system\_type](#input\_system\_type) | The type of system on which to create the StorSafe instance: 's922' or 'e980' for Power 9; 's1022' for Power 10 if present in the selected datacenter. | `string` | `"s922"` | no |
 | <a name="input_vcpus"></a> [vcpus](#input\_vcpus) | The number of vCPUs, AKA virtual processors, to assign to the StorSafe instance; one vCPU is equal to one physical CPU core. | `number` | `1` | no |
 | <a name="input_volume_configuration_size"></a> [volume\_configuration\_size](#input\_volume\_configuration\_size) | The size of the block storage volume for the StorSafe Configuration Repository in GB. | `number` | `20` | no |
