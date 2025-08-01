@@ -39,7 +39,7 @@
                 "standard-plus-vsi",
                 "standard-extend"
               ],
-              "install_type": "fullstack",
+              "install_type": "extend",
               "optional": true,
               "version": ">=8.0.0",
               "input_mapping": [
