@@ -13,34 +13,32 @@ resource "ibm_is_image" "import_custom_storsight_image" {
   }
 }
 
-# IBM terraform modules does not support custom boot size currently. Feature request is opened. Hence using resource.
+module "create_storsight_instance" {
+  count   = var.create_windows_instance ? 1 : 0
+  source  = "terraform-ibm-modules/landing-zone-vsi/ibm"
+  version = "5.4.6"
 
-resource "ibm_is_instance" "storsight_instance" {
-  count = var.create_storsight_instance ? 1 : 0
-
-  name           = "${local.prefix}-storsight"
-  image          = data.ibm_is_image.storsight_boot_image_data[0].id
-  profile        = var.storsight_instance_configuration.profile
-  resource_group = local.resource_group_id
-  keys           = local.ssh_key_ids
-  primary_network_interface {
-    subnet          = local.network_svc_subnet_id
-    security_groups = local.security_group_ids
-  }
-  boot_volume {
-    auto_delete_volume = true
-    name               = var.storsight_instance_configuration.boot_volume_name
-    size               = var.storsight_instance_configuration.boot_volume_size
-    encryption         = local.boot_volume_encryption_key
-  }
-  vpc  = local.vpc_id
-  zone = local.network_svc_subnet[0].zone
+  create_security_group         = false
+  image_id                      = data.ibm_is_image.storsight_boot_image_data[0].id
+  machine_type                  = var.storsight_instance_configuration.profile
+  prefix                        = "${local.prefix}-storsight"
+  resource_group_id             = local.resource_group_id
+  security_group_ids            = local.security_group_ids
+  ssh_key_ids                   = local.ssh_key_ids
+  subnets                       = local.subnets
+  user_data                     = ""
+  vpc_id                        = local.vpc_id
+  vsi_per_subnet                = 1
+  kms_encryption_enabled        = true
+  skip_iam_authorization_policy = true
+  boot_volume_size              = var.storsight_instance_configuration.boot_volume_size
+  boot_volume_encryption_key    = local.boot_volume_encryption_key
 }
 
 module "create_windows_instance" {
   count   = var.create_windows_instance ? 1 : 0
   source  = "terraform-ibm-modules/landing-zone-vsi/ibm"
-  version = "4.7.1"
+  version = "5.4.6"
 
   create_security_group         = false
   image_id                      = data.ibm_is_image.is_instance_boot_image_data[0].id
@@ -88,7 +86,7 @@ resource "ibm_pi_network" "optional_subnet_4" {
 
 module "pi_instance" {
   source  = "terraform-ibm-modules/powervs-instance/ibm"
-  version = "2.6.1"
+  version = "2.6.2"
 
   pi_workspace_guid              = local.powervs_workspace_guid
   pi_ssh_public_key_name         = local.powervs_sshkey_name

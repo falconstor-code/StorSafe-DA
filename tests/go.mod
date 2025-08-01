@@ -1,4 +1,4 @@
-module github.com/terraform-ibm-modules/vtlda
+module github.com/terraform-ibm-modules/StorSafe-DA
 
 go 1.21
 

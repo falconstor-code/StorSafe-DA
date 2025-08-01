@@ -5,8 +5,21 @@
       "label": "FalconStor StorSafe PowerVS Deployable Architecture",
       "product_kind": "solution",
       "version": "1.0.0",
-      "tags": ["network_vpc", "Technology"],
-      "keywords": ["Power", "IBM i", "Disaster Recovery", "Backup", "NAS", "VTL", "Deduplication", "Migration", "Veeam"],
+      "tags": [
+        "network_vpc",
+        "Technology"
+      ],
+      "keywords": [
+        "Power",
+        "IBM i",
+        "Disaster Recovery",
+        "Backup",
+        "NAS",
+        "VTL",
+        "Deduplication",
+        "Migration",
+        "Veeam"
+      ],
       "short_description": "Reduce your monthly PowerVS backup storage cost by up to 90%, while improving your existing backup solution performance.",
       "long_description": "FalconStor StorSafe is a software solution that optimizes backup and restore, to improve performance and significantly reduce backup storage costs, all without requiring changes to the existing requirement. With its integrated deduplication, the solution removes redundant copies of data, thereby reducing capacity requirements, decreasing storage costs, and minimizing replication and restore times. StorSafe can be used with all leading backup solutions, and enables both hybrid and native-cloud backup, as well as both workload and tape migration to the cloud. StorSafe also supports NFS and SMB interfaces in a NAS environment. AIX and Linux systems can use StorSafe as an NFS server for applications such as Oracle RMAN or SAP Hana Studio. You can also store backup files created with the Veeam Agent for IBM AIX on backup repositories managed by Veeam Backup & Replication (VBR).",
       "offering_docs_url": "https://falconstor-download.s3.us-east.cloud-object-storage.appdomain.cloud/FalconStor%20StorSafe%20for%20IBM%20Power%20Deployment%20Guide.pdf",
@@ -21,15 +34,19 @@
             {
               "name": "deploy-arch-ibm-pvs-inf",
               "id": "2dd486c7-b317-4aaa-907b-42671485ad96-global",
-              "flavors": ["standard", "standard-extend"],
+              "flavors": [
+                "standard",
+                "standard-plus-vsi",
+                "standard-extend"
+              ],
               "install_type": "fullstack",
               "optional": true,
               "version": ">=8.0.0",
               "input_mapping": [
-                  {
-                    "dependency_output": "schematics_workspace_id",
-                    "version_input": "prerequisite_workspace_id"
-                  }
+                {
+                  "dependency_output": "schematics_workspace_id",
+                  "version_input": "prerequisite_workspace_id"
+                }
               ]
             }
           ],
